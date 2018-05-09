@@ -1,0 +1,2 @@
+path_your_folder/*
+!path_your_folder/.gitkeep
