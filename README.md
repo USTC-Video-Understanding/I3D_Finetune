@@ -1,7 +1,7 @@
 # Introduction
-We release the entire code(both training phase & testing phase) for finetuning I3D model on UCF101. 
+We release the entire code(both training phase & testing phase) for finetuning I3D model on UCF101.   
 I3D paper:[Quo Vadis, Action Recognition? A New Model and the Kinetics Dataset](http://openaccess.thecvf.com/content_cvpr_2017/papers/Carreira_Quo_Vadis_Action_CVPR_2017_paper.pdf). 
-
+Please also refer to [kinetics-i3d](https://github.com/deepmind/kinetics-i3d) for models and details about I3D.
 # Prerequisites
 ## Software
 * Ubuntu 16.04.3 LTS
