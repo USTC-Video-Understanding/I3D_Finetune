@@ -1,1 +1,2 @@
-CUDA_VISIBLE_DEVICES=? python train.py ucf101 rgb
+run: CUDA_VISIBLE_DEVICES=? python Demo_Transfer.py ucf101 rgb
+now we can achieve the speed of 1.1s/batch!
