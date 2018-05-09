@@ -78,6 +78,6 @@ Training Split |      RGB     |    Flow
 Thanks to tf.Dataset API, we can achieve training speed at 1s/batch(64 frames)!
 
 # Contact
-This work is mainly done by Hao Zhou (@Rhythmblue) and Hezhen Hu (@AlexHu123). If you have any questions, please create an issue in this repo. We are very happy to hear from you!
+This work is mainly done by Hao Zhou ([Rhythmblue](https://github.com/Rhythmblue)) and Hezhen Hu ([AlexHu123](https://github.com/AlexHu123)). If you have any questions, please create an issue in this repo. We are very happy to hear from you!
 
 
