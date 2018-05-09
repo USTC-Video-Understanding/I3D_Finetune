@@ -22,8 +22,7 @@ _prefetch_buffer_size = 30
 _CHECKPOINT_PATHS = {
     'rgb': './data/checkpoints/rgb_scratch/model.ckpt',
     'flow': './data/checkpoints/flow_scratch/model.ckpt',
-    #'rgb_imagenet': './data/checkpoints/rgb_imagenet/model.ckpt',
-    'rgb_imagenet': './data/checkpoints/rgb_imagenet/ucf101_rgb_0.945_model-49290',
+    'rgb_imagenet': './data/checkpoints/rgb_imagenet/model.ckpt',
     'flow_imagenet': './data/checkpoints/flow_imagenet/model.ckpt',
 }
 
@@ -48,12 +47,10 @@ if not os.path.exists(log_dir):
 
 
 def _parse_function(train_info_tensor):
-    #print(train_info_tensor) 
     clip_holder, label_holder = tf.py_func(single_video, [train_info_tensor], [tf.float32, tf.int64])
     return clip_holder, label_holder
 
 def _parse_function2(test_info_tensor):
-    #print(train_info_tensor) 
     clip_holder, label_holder = tf.py_func(single_video2, [test_info_tensor], [tf.float32, tf.int64])
     return clip_holder, label_holder
 
@@ -77,8 +74,6 @@ def main(dataset_name, data_tag):
     assert data_tag in ['rgb', 'flow']
     # logging.basicConfig(level=logging.INFO, filename='log.txt', filemode='w', format='%(message)s')
 
-
-#    with tf.device('/cpu:0'):
     ##  Data Preload  ###
     train_info, test_info = split_data(
         os.path.join('./data', dataset_name, data_tag+'.txt'),
@@ -98,7 +93,6 @@ def main(dataset_name, data_tag):
     # one element in this dataset is (train_info list)
     train_dataset = tf.data.Dataset.from_tensor_slices((train_info_tensor))
     # one element in this dataset is (single image_postprocess, single label)
-    
     # one element in this dataset is (batch image_postprocess, batch label)
     train_dataset = train_dataset.shuffle(buffer_size=9540)
     train_dataset = train_dataset.map(_parse_function, num_parallel_calls=7)
@@ -132,24 +126,6 @@ def main(dataset_name, data_tag):
     is_train_holder = tf.placeholder(tf.bool)
 
 
-    # with tf.Session() as sess:
-    #     #sess.run(init_op)
-    #     try:
-    #         sess.run(train_init_op)
-    #         for i in range(10):
-    #             clip, label = sess.run([clip_holder,label_holder])
-    #             print(clip.shape, label)
-    #             print('aa')
-    #         sess.run(test_init_op)
-    #         for i in range(10):   
-    #             clip, label = sess.run([clip_holder,label_holder])
-    #             print(clip.shape, label)
-    #             print('bb')
-    #     except tf.errors.OutOfRangeError:
-    #         print("end!")    
-    # assert 1==2
-
-
     #inference module
     ###  Inference Module
     with tf.variable_scope(_SCOPE[train_data.tag]):
@@ -164,7 +140,6 @@ def main(dataset_name, data_tag):
         #compute the top-k results for the whole batch size
         top_k_op = tf.nn.in_top_k(fc_out, label_holder, 1)
 
-
     ###    Loss calculation, including L2-norm   
     variable_map = {}
     train_var = []
@@ -178,7 +153,7 @@ def main(dataset_name, data_tag):
     loss_weight = tf.add_n(tf.get_collection('weight_l2'), 'loss_weight')
     loss = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(
         labels=label_holder, logits=fc_out))
-    total_loss = loss + 9e-7 * loss_weight
+    total_loss = loss + 7e-7 * loss_weight
     tf.summary.scalar('loss', loss)
     tf.summary.scalar('loss_weight', loss_weight)
     tf.summary.scalar('total_loss', total_loss)
@@ -194,11 +169,6 @@ def main(dataset_name, data_tag):
     global_step = _GLOBAL_EPOCH * per_epoch_step
     #global step counting
     global_index = tf.Variable(0, trainable=False)
-
-    # decay_step = 8000
-    # learning_rate = tf.train.exponential_decay(
-    #     _LEARNING_RATE, global_index, decay_step, 0.1, staircase=True)
-    # tf.summary.scalar('learning_rate', learning_rate)
 
 
     boundaries = [8000,  16000,  24000, 31000, 40000, 50000, 60000, 75000] 
@@ -235,7 +205,7 @@ def main(dataset_name, data_tag):
         start_time = time.time()
   
         _, loss_now, loss_plus, top_1, summary = sess.run([optimizer, total_loss, loss_weight, top_k_op, merged],
-                               feed_dict={dropout_holder: 0.25,
+                               feed_dict={dropout_holder: 0.36,
                                           is_train_holder: True})
         duration = time.time() - start_time
         tmp = np.sum(top_1)
