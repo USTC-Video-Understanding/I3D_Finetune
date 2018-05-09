@@ -71,9 +71,9 @@ CUDA_VISIBLE_DEVICES=0 python test.py ucf101 mixed
 # Results
 Our training results on UCF-101 Split-1 are:  
 
-Training Split |      RGB     |    Flow
--------------- | ------------ | -----------
-   Split1      |     94.7     |    96.3
+Training Split |      RGB     |    Flow  | Fusion
+-------------- | ------------ | ---------|----------
+   Split1      |     94.7%     |    96.3%  | **97.6%**
 
 Thanks to tf.Dataset API, we can achieve training speed at 1s/batch(64 frames)!
 
