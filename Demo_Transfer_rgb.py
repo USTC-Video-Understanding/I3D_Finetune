@@ -70,7 +70,7 @@ def single_video2(test_info):
     return clip_seq, label_seq
 
 
-def main(dataset_name, data_tag):
+def main(dataset_name, data_tag='rgb'):
     assert data_tag in ['rgb', 'flow']
     # logging.basicConfig(level=logging.INFO, filename='log.txt', filemode='w', format='%(message)s')
 
@@ -145,7 +145,7 @@ def main(dataset_name, data_tag):
     train_var = []
     for variable in tf.global_variables():
         tmp = variable.name.split('/')
-        if tmp[0] == _SCOPE[train_data.tag]:
+        if tmp[0] == _SCOPE[train_data.tag] and 'dense' not in tmp[1]:
             variable_map[variable.name.replace(':0', '')] = variable
         if tmp[-1] == 'w:0' or tmp[-1] == 'kernel:0':
             weight_l2 = tf.nn.l2_loss(variable)
@@ -190,7 +190,6 @@ def main(dataset_name, data_tag):
     saver.restore(sess, _CHECKPOINT_PATHS[train_data.tag+'_imagenet'])
     
     
-    print(train_data.size)
     print('----Here we start!----')
     # logging.info('----Here we start!----')
     step = 0
@@ -255,5 +254,5 @@ if __name__ == '__main__':
     description = 'finetune on other dataset'
     p = argparse.ArgumentParser(description=description)
     p.add_argument('dataset_name', type=str)
-    p.add_argument('data_tag', type=str)
+    #p.add_argument('data_tag', type=str)
     main(**vars(p.parse_args()))
