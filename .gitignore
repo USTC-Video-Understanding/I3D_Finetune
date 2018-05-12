@@ -1,2 +1,10 @@
 path_your_folder/*
 !path_your_folder/.gitkeep
+*.pyc
+*.swp
+*.index
+*.meta
+*.data-00000-of-00001
+model/*
+data/checkpoints/*
+__pycache__
