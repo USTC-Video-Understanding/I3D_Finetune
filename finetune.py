@@ -192,7 +192,7 @@ def main(dataset='ucf101', mode='rgb', split=1):
 
     # Set learning rate schedule by hand, also you can use an auto way
     boundaries = [10000, 20000, 30000, 40000, 50000]
-    values = [0.0008, 0.0005, 0.0003, 0.0001, 5e-5]
+    values = [_LEARNING_RATE, 0.0008, 0.0005, 0.0003, 0.0001, 5e-5]
     learning_rate = tf.train.piecewise_constant(
         global_index, boundaries, values)
     tf.summary.scalar('learning_rate', learning_rate)
