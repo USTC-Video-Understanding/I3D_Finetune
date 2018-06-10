@@ -82,7 +82,7 @@ def main(dataset_name, data_tag):
             flow_model = i3d.InceptionI3d(400, spatial_squeeze=True, final_endpoint='Logits')
             flow_logits, _ = flow_model(flow_holder, is_training=False, dropout_keep_prob=1)
             flow_logits_dropout = tf.nn.dropout(flow_logits, 1)   
-            flow_fc_out = tf.layers.dense(flow_logits_dropout, _CLASS_NUM[dataset_name], tf.nn.relu, use_bias=True)
+            flow_fc_out = tf.layers.dense(flow_logits_dropout, _CLASS_NUM[dataset_name], use_bias=True)
             flow_top_k_op = tf.nn.in_top_k(flow_fc_out, label_holder, 1)
 
     #construct two separate feature map and saver(rgb_saver,flow_saver)
