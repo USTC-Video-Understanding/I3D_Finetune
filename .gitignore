@@ -8,3 +8,4 @@ path_your_folder/*
 model/*
 data/checkpoints/*
 __pycache__
+*.vscode
