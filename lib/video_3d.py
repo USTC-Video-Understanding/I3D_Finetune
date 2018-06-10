@@ -1,8 +1,13 @@
 import random
 import os
 import numpy as np
+# To suppress the complaint of `image file is truncated`
+from PIL import ImageFile
+ImageFile.LOAD_TRUNCATED_IMAGES = True
+
 from PIL import Image
-from rmb_lib.data_augment import transform_data
+
+from lib.data_augment import transform_data
 
 
 class Video_3D:

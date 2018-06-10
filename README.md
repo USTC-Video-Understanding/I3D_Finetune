@@ -48,24 +48,24 @@ i.e, use `{:s}` replace `x` or `y` in path. If you are confused, please refer ou
 
 ## 4. Train on UCF101 on RGB data and flow data
 ```bash
-# Finetune on RGB data of UCF101
-CUDA_VISIBLE_DEVICES=0 python Demo_Transfer_rgb.py ucf101
-# Finetune on flow data of UCF101
-CUDA_VISIBLE_DEVICES=0 python Demo_Transfer_flow.py ucf101 
+# Finetune on split1 of RGB data of UCF101
+CUDA_VISIBLE_DEVICES=0 python finetune.py ucf101 rgb 1
+# Finetune on split2 of flow data of UCF101
+CUDA_VISIBLE_DEVICES=0 python finetune.py ucf101 flow 2 
 ```
 We share our trained models on UCF101(RGB & FLOW) in [GoogleDrive](https://drive.google.com/open?id=1URkdw76Q2yfetDJLPv--2VxWcOg2Q6Hd) and [BaiduDisk](https://pan.baidu.com/s/1LDOlxCfnyZ-EQ4pPwqz5-g) (password:ddar). You can download these models and put them in `model` folder of this repo. In this way you can skip the train commands above and directly run test in the next step.
 
 ## 5. test on UCF101 on RGB data and flow data
 After you have trained the model, you can run the test procedure. 
-First, please update [these two line](https://github.com/USTC-Video-Understanding/I3D_Finetune/blob/master/test.py#L22-L23) to set the value to right location of your trained model generated in the previous step.  
+First, please update `_DATA_ROOT` and `_CHECKPOINT_PATHS` in `test.py` by setting the value to right location of your dataset and your trained model generated in the previous step, respectively.  
 Then you can run testing using below commands:
 ```bash
-# run testing on RGB data
-CUDA_VISIBLE_DEVICES=0 python test.py ucf101 rgb
-# run testing on flow data
-CUDA_VISIBLE_DEVICES=0 python test.py ucf101 flow
-# run testing both on RGB and flow data
-CUDA_VISIBLE_DEVICES=0 python test.py ucf101 mixed
+# run testing on the split1 of RGB data of UCF101 
+CUDA_VISIBLE_DEVICES=0 python test.py ucf101 rgb 1
+# run testing on the split1 of flow data of UCF101
+CUDA_VISIBLE_DEVICES=0 python test.py ucf101 flow 1
+# run testing both on RGB and flow data of split1 of UCF101
+CUDA_VISIBLE_DEVICES=0 python test.py ucf101 mixed 1
 ```
 
 # Results
@@ -79,5 +79,3 @@ Thanks to tf.Dataset API, we can achieve training speed at 1s/batch(64 frames)!
 
 # Contact
 This work is mainly done by Hao Zhou ([Rhythmblue](https://github.com/Rhythmblue)) and Hezhen Hu ([AlexHu123](https://github.com/AlexHu123)). If you have any questions, please create an issue in this repo. We are very happy to hear from you!
-
-

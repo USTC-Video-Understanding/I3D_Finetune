@@ -1,5 +1,5 @@
-path_your_folder/*
-!path_your_folder/.gitkeep
+output/*
+!output/.gitkeep
 *.pyc
 *.swp
 *.index
