@@ -136,7 +136,7 @@ def main(dataset_name, data_tag='rgb'):
         logits, _ = model(clip_holder, is_training=is_train_holder, dropout_keep_prob=dropout_holder)
         logits_dropout = tf.nn.dropout(logits, dropout_holder)
         #To change 400 classes to the ucf101 or hdmb classes   
-        fc_out = tf.layers.dense(logits_dropout, _CLASS_NUM[dataset_name], tf.nn.relu, use_bias=True)
+        fc_out = tf.layers.dense(logits_dropout, _CLASS_NUM[dataset_name], use_bias=True)
         #compute the top-k results for the whole batch size
         top_k_op = tf.nn.in_top_k(fc_out, label_holder, 1)
 
