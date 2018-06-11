@@ -36,10 +36,10 @@ _SAVE_MODEL_THRESH = 0.75
 _LOG_ROOT = 'output'
 
 _CHECKPOINT_PATHS = {
-    'rgb': './f-data/checkpoints/rgb_scratch/model.ckpt',
-    'flow': './f-data/checkpoints/flow_scratch/model.ckpt',
-    'rgb_imagenet': './f-data/checkpoints/rgb_imagenet/model.ckpt',
-    'flow_imagenet': './f-data/checkpoints/flow_imagenet/model.ckpt',
+    'rgb': './data/checkpoints/rgb_scratch/model.ckpt',
+    'flow': './data/checkpoints/flow_scratch/model.ckpt',
+    'rgb_imagenet': './data/checkpoints/rgb_imagenet/model.ckpt',
+    'flow_imagenet': './data/checkpoints/flow_imagenet/model.ckpt',
 }
 
 _CHANNEL = {
