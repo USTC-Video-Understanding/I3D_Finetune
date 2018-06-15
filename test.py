@@ -98,7 +98,7 @@ def main(dataset, mode, split):
                 rgb_holder, is_training=False, dropout_keep_prob=1)
             rgb_logits_dropout = tf.nn.dropout(rgb_logits, 1)
             rgb_fc_out = tf.layers.dense(
-                rgb_logits_dropout, _CLASS_NUM[dataset], tf.nn.relu, use_bias=True)
+                rgb_logits_dropout, _CLASS_NUM[dataset], use_bias=True)
             rgb_top_1_op = tf.nn.in_top_k(rgb_fc_out, label_holder, 1)
     if mode in ['flow', 'mixed']:
         with tf.variable_scope(_SCOPE['flow']):
