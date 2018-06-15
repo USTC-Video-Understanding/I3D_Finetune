@@ -62,7 +62,7 @@ def main(dataset, mode, split):
     assert mode in ['rgb', 'flow', 'mixed']
     log_dir = os.path.join(_LOG_ROOT, 'test-%s-%s-%d' % (dataset, mode, split))
     if not os.path.exists(log_dir):
-    os.mkdir(log_dir)
+        os.mkdir(log_dir)
 
     logging.basicConfig(level=logging.INFO, filename=os.path.join(
         log_dir, 'log-%s-%d' % (mode, split)+'.txt'), filemode='w', format='%(message)s')
